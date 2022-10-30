@@ -3,33 +3,40 @@
 
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-unstable";
+    flake-utils.url = "github:numtide/flake-utils";
   };
 
   outputs =
     inputs @ { self
     , nixpkgs
+    , flake-utils
     ,
     }:
+    flake-utils.lib.eachDefaultSystem (system:
     let
-      system = "x86_64-linux";
+      # system = "x86_64-linux";
 
       pkgs = import nixpkgs {
         inherit system;
-        config = {
-          allowUnfree = true;
-          allowInsecure = true;
-        };
+        overlays = [ overlay ];
       };
+      overlay = (final: prev: {
+        site = prev.callPackage ./website { };
+      });
 
     in
-    {
-      formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.nixpkgs-fmt;
+    rec {
+      inherit (overlay);
+      formatter = nixpkgs.legacyPackages.x86_64-linux.nixpkgs-fmt;
 
-      devShells.x86_64-linux.default = pkgs.mkShell {
+      defaultPackage = pkgs.site;
+      devShells = pkgs.mkShell {
         buildInputs = with pkgs; [
           zola
+          # _9glenda-site
+
         ];
       };
 
-    };
+    });
 }
