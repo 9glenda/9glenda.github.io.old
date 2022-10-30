@@ -20,7 +20,7 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: submodules
-        run: git submodule sync 
+        run: git clone https://github.com/pawroman/zola-theme-terminimal.git website/themes/terminimal
       
       - uses: actions/checkout@v2
       - name: Build Zola site with Nix Flakes
