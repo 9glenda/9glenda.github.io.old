@@ -8,7 +8,7 @@ pkgs.stdenv.mkDerivation rec {
     zola build
   '';
   installPhase = ''
-    cp -r public $out
     touch public/.nojekyll
+    cp -r public $out
   '';
 }
