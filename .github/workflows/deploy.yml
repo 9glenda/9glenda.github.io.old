@@ -27,7 +27,7 @@ jobs:
           extra_nix_config: |
             experimental-features = nix-command flakes
       - run: nix flake check
-      - run: nix build --out-link build
+      - run: nix build .?submodules=1 --out-link build
       - name: Deploy to GH Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
