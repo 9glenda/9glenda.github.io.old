@@ -27,16 +27,14 @@
     in
     rec {
       inherit (overlay);
-      formatter = nixpkgs.legacyPackages.x86_64-linux.nixpkgs-fmt;
+      formatter = pkgs.nixpkgs-fmt;
 
       defaultPackage = pkgs.site;
-      devShells = pkgs.mkShell {
-        buildInputs = with pkgs; [
-          zola
-          # _9glenda-site
-
-        ];
-      };
+      # devShells = pkgs.mkShell {
+        # buildInputs = with pkgs; [
+          # zola
+        # ];
+      # };
 
     });
 }
