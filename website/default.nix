@@ -9,5 +9,6 @@ pkgs.stdenv.mkDerivation rec {
   '';
   installPhase = ''
     cp -r public $out
+    touch public/.nojekyll
   '';
 }
